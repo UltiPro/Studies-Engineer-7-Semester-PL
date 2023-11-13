@@ -26,5 +26,4 @@ def construct_bezier_curve(points: list[Point], n) -> list[tuple[int, int]]:
     for i in range(n):
         t = i / float(n - 1)
         points_in_curve.append(get_curve_point(points, t))
-
     return points_in_curve

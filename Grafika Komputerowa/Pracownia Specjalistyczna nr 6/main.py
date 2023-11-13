@@ -15,7 +15,6 @@ if __name__ == "__main__":
     root.title("Pracownia Specjalistyczna nr 6")
     app = MainApplication(root)
     app.pack(side="top", fill="both", expand=True)
-
     print("-------------------------")
     print("-------- KEYMAPS --------")
     print("-------------------------")
@@ -28,5 +27,4 @@ if __name__ == "__main__":
     print("-------")
     print("d | clear canvas")
     print("-------------------------")
-
     root.mainloop()
