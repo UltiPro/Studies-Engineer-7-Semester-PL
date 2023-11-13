@@ -69,7 +69,8 @@ class FilterFrame(tk.Frame):
             self,
             text="Stwórz własny filtr",
             command=lambda: create_custom_filter_window(
-                self, self.parent.parent.parent),
+                self, self.parent.parent.parent
+            ),
         )
 
         self.avg_filter_bt.pack()

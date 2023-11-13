@@ -11,7 +11,6 @@ WIDTH, HEIGHT = 800, 600
 
 
 class OpenGLApp:
-
     def __init__(self, shader: Shader):
         self.w = 1280
         self.h = 720
@@ -19,7 +18,7 @@ class OpenGLApp:
 
         self.mouse_down = False
         self.mouse_down_r = False
-        self.mouse_prev = glm.vec2(WIDTH/2, HEIGHT/2)
+        self.mouse_prev = glm.vec2(WIDTH / 2, HEIGHT / 2)
 
     def initializeGL(self) -> None:
         glfwInit()
@@ -28,9 +27,8 @@ class OpenGLApp:
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE)
         glfwWindowHint(GLFW_SAMPLES, 4)
 
-        self.window = glfwCreateWindow(
-            WIDTH, HEIGHT, "Grafika_Kostka", None, None)
-        if (self.window == None):
+        self.window = glfwCreateWindow(WIDTH, HEIGHT, "Grafika_Kostka", None, None)
+        if self.window == None:
             print("Failed to create GLFW window")
             glfwTerminate()
 
@@ -60,10 +58,10 @@ class OpenGLApp:
         proj = glm.mat4()
 
         view = glm.translate(view, glm.vec3(-1.0, 0.0, -3.0))
-        proj = glm.perspective(glm.radians(45.0), self.w/self.h, 0.1, 100.0)
+        proj = glm.perspective(glm.radians(45.0), self.w / self.h, 0.1, 100.0)
 
-        self.shader.send_mat4('view', view)
-        self.shader.send_mat4('projection', proj)
+        self.shader.send_mat4("view", view)
+        self.shader.send_mat4("projection", proj)
 
     def render(self):
         glClearColor(0.2, 0.3, 0.3, 1.0)
@@ -111,8 +109,8 @@ def mouse_pos_callback(window: GLFWwindow, xpos: float, ypos: float):
 
 
 def main():
-    v_path = Path(__file__).parent / 'shaders' / 'vertex.glsl'
-    f_path = Path(__file__).parent / 'shaders' / 'fragment.glsl'
+    v_path = Path(__file__).parent / "shaders" / "vertex.glsl"
+    f_path = Path(__file__).parent / "shaders" / "fragment.glsl"
 
     shader = Shader(v_path.absolute(), f_path.absolute())
     app = OpenGLApp(shader)
@@ -123,5 +121,5 @@ def main():
         glfwPollEvents()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

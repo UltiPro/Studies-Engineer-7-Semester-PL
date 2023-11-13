@@ -26,7 +26,7 @@ def link_program(program: GLuint, vshader: GLuint, fshader: GLuint) -> None:
 
     if not glGetProgramiv(program, GL_LINK_STATUS):
         error = glGetProgramInfoLog(program)
-        logger.error('Linking error:\n%s', error)
+        logger.error("Linking error:\n%s", error)
         raise RuntimeError("Linking Error")
 
 
@@ -64,5 +64,9 @@ class Shader:
             glUseProgram(self.shader_id)
 
     def send_mat4(self, name: str, matrix: glm.mat4) -> None:
-        glUniformMatrix4fv(glGetUniformLocation(
-            self.shader_id, name), 1, GL_FALSE, glm.value_ptr(matrix))
+        glUniformMatrix4fv(
+            glGetUniformLocation(self.shader_id, name),
+            1,
+            GL_FALSE,
+            glm.value_ptr(matrix),
+        )

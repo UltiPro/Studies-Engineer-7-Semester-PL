@@ -14,7 +14,7 @@ WIDTH, HEIGHT = 1080, 720
 
 
 @dataclass
-class Vec2():
+class Vec2:
     x: int
     y: int
 
@@ -49,7 +49,7 @@ def get_color(event):
     screenshot = ImageGrab.grab(bbox=(x - 5, y - 5, x + 5, y + 5))
     pixel = screenshot.getpixel((5, 5))
 
-    color_label.config(text=f'RGB: {pixel}')
+    color_label.config(text=f"RGB: {pixel}")
 
 
 def mouse_right_pressed(event: tk.Event):
@@ -98,8 +98,7 @@ def scroll_pressed(event: tk.Event):
         return
 
     global imagesprite
-    canvas.coords(imagesprite,
-                  canvas.winfo_width()//2, canvas.winfo_height()//2)
+    canvas.coords(imagesprite, canvas.winfo_width() // 2, canvas.winfo_height() // 2)
 
 
 def redraw_img():
@@ -107,7 +106,9 @@ def redraw_img():
 
     if image:
         disp2 = disp.resize(
-            (round(dims[0]*scale), round(dims[1]*scale)), resample=im.Resampling.NEAREST)
+            (round(dims[0] * scale), round(dims[1] * scale)),
+            resample=im.Resampling.NEAREST,
+        )
         image = imtk.PhotoImage(disp2)
 
         canvas.itemconfigure(imagesprite, image=image)
@@ -131,10 +132,10 @@ def linear_scale_color(scale_factor):
     scaled_image = im.new("RGB", (width, height))
     scaled_image.putdata(scaled_pixels)
 
-    save_path = os.path.join('', "program_data") + ".jpeg"
+    save_path = os.path.join("", "program_data") + ".jpeg"
 
     if scaled_image:
-        rgb_disp = scaled_image.convert('RGB')
+        rgb_disp = scaled_image.convert("RGB")
         rgb_disp.save(save_path, "JPEG", quality=100)
 
     load_jpeg_file("./program_data.jpeg")
@@ -149,13 +150,13 @@ def load_ppm_file(filepath: str):
     global dims
     start_time = timeit.default_timer()
     img = ppm_reader.read_file(filepath)
-    print(f'Time to load file: {timeit.default_timer() - start_time}')
+    print(f"Time to load file: {timeit.default_timer() - start_time}")
     if not img:
         return
 
     dims = (img.width, img.height)
     buf: bytes
-    if img.type == 'bin':
+    if img.type == "bin":
         buf = img.pixel_data
     else:
         buf = bytes(chain.from_iterable(img.pixel_data))
@@ -163,8 +164,9 @@ def load_ppm_file(filepath: str):
     disp = im.frombuffer(img.mode, (img.width, img.height), buf)
     image = imtk.PhotoImage(disp)
 
-    imagesprite = canvas.create_image(canvas.winfo_width()//2,
-                                      canvas.winfo_height()//2, image=image)
+    imagesprite = canvas.create_image(
+        canvas.winfo_width() // 2, canvas.winfo_height() // 2, image=image
+    )
 
 
 def load_jpeg_file(filepath: str):
@@ -174,17 +176,18 @@ def load_jpeg_file(filepath: str):
     dims = (disp.width, disp.height)
     image = imtk.PhotoImage(disp)
 
-    imagesprite = canvas.create_image(canvas.winfo_width()//2,
-                                      canvas.winfo_height()//2, image=image)
+    imagesprite = canvas.create_image(
+        canvas.winfo_width() // 2, canvas.winfo_height() // 2, image=image
+    )
 
 
 def load_file(filepath: str):
-    if filepath[-4:] == '.ppm':
+    if filepath[-4:] == ".ppm":
         load_ppm_file(filepath)
-    elif filepath[-4:] == '.jpg' or filepath[-5:] == '.jpeg':
+    elif filepath[-4:] == ".jpg" or filepath[-5:] == ".jpeg":
         load_jpeg_file(filepath)
     else:
-        print('Invalid filetype')
+        print("Invalid filetype")
 
 
 def save_jpeg(filepath: str, compression):
@@ -192,17 +195,17 @@ def save_jpeg(filepath: str, compression):
     try:
         compression = int(compression)
     except:
-        print('compression must be int value')
+        print("compression must be int value")
         return
 
     if compression < 1 or compression > 100:
-        print('compression must be 1-100')
+        print("compression must be 1-100")
         return
 
-    save_path = os.path.join('', filepath) + ".jpeg"
+    save_path = os.path.join("", filepath) + ".jpeg"
 
     if disp:
-        rgb_disp = disp.convert('RGB')
+        rgb_disp = disp.convert("RGB")
         rgb_disp.save(save_path, "JPEG", quality=compression)
 
 
@@ -220,35 +223,41 @@ canvas.bind("<MouseWheel>", mouse_scroll)
 
 
 config_pane.pack(side="left")
-canvas.pack(side='right')
+canvas.pack(side="right")
 canvas.update()
 
-open_label = tk.Label(config_pane, text='Open file')
+open_label = tk.Label(config_pane, text="Open file")
 open_label.pack()
-open_bt = tk.Button(config_pane, text='open',
-                    command=lambda: load_file(fd.askopenfilename()))
+open_bt = tk.Button(
+    config_pane, text="open", command=lambda: load_file(fd.askopenfilename())
+)
 open_bt.pack()
 color_label = tk.Label(config_pane, text="", font=("Helvetica", 12))
 color_label.pack()
-sep = tk.Label(config_pane, text='-')
+sep = tk.Label(config_pane, text="-")
 sep.pack(pady=20)
-scale_slider = tk.Scale(config_pane, from_=0.1, to=2.0,
-                        resolution=0.01, orient="horizontal", label="Scale")
+scale_slider = tk.Scale(
+    config_pane, from_=0.1, to=2.0, resolution=0.01, orient="horizontal", label="Scale"
+)
 scale_slider.pack()
 scale_slider.set(1.0)
-scale_button = tk.Button(config_pane, text="Save Scale",
-                         command=lambda: linear_scale_color(scale_slider.get()))
+scale_button = tk.Button(
+    config_pane,
+    text="Save Scale",
+    command=lambda: linear_scale_color(scale_slider.get()),
+)
 scale_button.pack()
-save_label = tk.Label(config_pane, text='Save image as jpeg with name:')
+save_label = tk.Label(config_pane, text="Save image as jpeg with name:")
 save_label.pack()
 save_fp = tk.Entry(config_pane)
 save_fp.pack()
-comp_label = tk.Label(config_pane, text='with quality (1-100):')
+comp_label = tk.Label(config_pane, text="with quality (1-100):")
 comp_label.pack()
 save_cmp = tk.Entry(config_pane)
 save_cmp.pack()
-save_bt = tk.Button(config_pane, text='save',
-                    command=lambda: save_jpeg(save_fp.get(), save_cmp.get()))
+save_bt = tk.Button(
+    config_pane, text="save", command=lambda: save_jpeg(save_fp.get(), save_cmp.get())
+)
 save_bt.pack()
 
 

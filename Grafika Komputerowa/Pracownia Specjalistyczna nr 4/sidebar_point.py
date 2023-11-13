@@ -98,10 +98,10 @@ class PointFrame(tk.Frame):
     def __send_single_lut(self, op: Operation):
         try:
             val = float(self.val_light.get())
-            self.val_light.configure(background='white')
+            self.val_light.configure(background="white")
         except:
             self.val_light.delete(0, tk.END)
-            self.val_light.configure(background='red')
+            self.val_light.configure(background="red")
             return
         luts = [create_lut(op, val)]
         self.image_frame.apply_luts(luts)

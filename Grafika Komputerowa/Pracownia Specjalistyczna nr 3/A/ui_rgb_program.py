@@ -10,7 +10,8 @@ class Ui_MainWindow(object):
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.centralwidget.setStyleSheet(
-            "QWidget { background-color: #F3F3F4; color: #404244; }")
+            "QWidget { background-color: #F3F3F4; color: #404244; }"
+        )
 
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.centralwidget)
         self.horizontalLayout.setObjectName("horizontalLayout")
@@ -188,8 +189,16 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-        for text in [self.r_text, self.g_text, self.b_text, self.c_text, self.m_text, self.y_text, self.k_text]:
-            text.setText('0')
+        for text in [
+            self.r_text,
+            self.g_text,
+            self.b_text,
+            self.c_text,
+            self.m_text,
+            self.y_text,
+            self.k_text,
+        ]:
+            text.setText("0")
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate

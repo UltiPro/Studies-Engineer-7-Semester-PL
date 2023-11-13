@@ -57,7 +57,7 @@ class PySlider(QSlider):
         handle_radius=0,
         handle_color="#000000",
         handle_color_hover="#616161",
-        handle_color_pressed="#a1a1a1"
+        handle_color_pressed="#a1a1a1",
     ):
         super(PySlider, self).__init__(parent=parent)
 
@@ -73,7 +73,7 @@ class PySlider(QSlider):
             _handle_radius=handle_radius,
             _handle_color=handle_color,
             _handle_color_hover=handle_color_hover,
-            _handle_color_pressed=handle_color_pressed
+            _handle_color_pressed=handle_color_pressed,
         )
 
         self.setStyleSheet(adjust_style)

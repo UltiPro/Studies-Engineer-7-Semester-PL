@@ -59,8 +59,7 @@ def on_canvas_click(event):
     if selected_shape.get() == "Linia":
         temp_shape = my_canvas.create_line(x1, y1, x2, y2, fill=fill_color)
     elif selected_shape.get() == "Prostokąt":
-        temp_shape = my_canvas.create_rectangle(
-            x1, y1, x2, y2, fill=fill_color)
+        temp_shape = my_canvas.create_rectangle(x1, y1, x2, y2, fill=fill_color)
     elif selected_shape.get() == "Okrąg":
         temp_shape = my_canvas.create_oval(x1, y1, x2, y2, fill=fill_color)
 
@@ -81,8 +80,7 @@ def on_drag(event):
     if selected_shape.get() == "Linia":
         temp_shape = my_canvas.create_line(x1, y1, x2, y2, fill=fill_color)
     elif selected_shape.get() == "Prostokąt":
-        temp_shape = my_canvas.create_rectangle(
-            x1, y1, x2, y2, fill=fill_color)
+        temp_shape = my_canvas.create_rectangle(x1, y1, x2, y2, fill=fill_color)
     elif selected_shape.get() == "Okrąg":
         temp_shape = my_canvas.create_oval(x1, y1, x2, y2, fill=fill_color)
 
@@ -149,13 +147,11 @@ def save_canvas_json():
         item_type = my_canvas.type(item)
         item_coords = my_canvas.coords(item)
         item_color = my_canvas.itemcget(item, "fill")
-        shapes_json.append({
-            "type": item_type,
-            "coords": item_coords,
-            "color": item_color
-        })
+        shapes_json.append(
+            {"type": item_type, "coords": item_coords, "color": item_color}
+        )
 
-    with open(filename, 'w') as file:
+    with open(filename, "w") as file:
         json.dump(shapes_json, file, indent=4)
     print(f"Zapisano canvas do pliku JSON: {filename}")
 
@@ -183,7 +179,7 @@ def load_canvas_json():
     filename = entry_load.get()
     shapes_json = []
     try:
-        with open(filename, 'r') as file:
+        with open(filename, "r") as file:
             shapes_json = json.load(file)
     except Exception as e:
         pass
@@ -217,8 +213,7 @@ def main():
     my_canvas = Canvas(root, width=600, height=400, bg="white")
     my_canvas.pack(pady=30)
 
-    shape_option_menu = OptionMenu(
-        root, selected_shape, "Linia", "Prostokąt", "Okrąg")
+    shape_option_menu = OptionMenu(root, selected_shape, "Linia", "Prostokąt", "Okrąg")
     shape_option_menu.pack()
 
     entry_label = Label(root, text="Wprowadź parametry (x1 y1 x2 y2 [kolor]):")

@@ -37,8 +37,7 @@ class CustomFilterWindow(tk.Toplevel):
             self.dims_input.configure(background="red")
             return
 
-        self.weight_inputs = WeightInputFrame(
-            self.parent, self.filter_frame, int_dims)
+        self.weight_inputs = WeightInputFrame(self.parent, self.filter_frame, int_dims)
         self.weight_inputs.grab_set()
         self.destroy()
 
@@ -58,8 +57,7 @@ class WeightInputFrame(tk.Toplevel):
             row = i // dims
             entry.grid(column=col, row=row, padx=2, pady=2)
 
-        self.submit = tk.Button(self, text="Zapisz",
-                                command=self.return_weights)
+        self.submit = tk.Button(self, text="Zapisz", command=self.return_weights)
 
         self.submit.grid(column=(dims // 2), row=dims)
 

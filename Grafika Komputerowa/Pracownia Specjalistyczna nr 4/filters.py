@@ -2,7 +2,9 @@ from PIL.Image import Image
 import statistics
 
 
-def get_pixels_in_mask(image: Image, pos: tuple[int, int], mask_dims=3) -> tuple[list[tuple], list]:
+def get_pixels_in_mask(
+    image: Image, pos: tuple[int, int], mask_dims=3
+) -> tuple[list[tuple], list]:
     pixels = []
     mask_indices = []
     w, h = image.size
@@ -33,16 +35,13 @@ class AverageFilter:
             for y in range(0, h):
                 pixels_in_mask, indices = get_pixels_in_mask(image, (x, y))
                 r = round(
-                    sum([pixel[0] for pixel in pixels_in_mask]) /
-                    len(pixels_in_mask)
+                    sum([pixel[0] for pixel in pixels_in_mask]) / len(pixels_in_mask)
                 )
                 g = round(
-                    sum([pixel[1] for pixel in pixels_in_mask]) /
-                    len(pixels_in_mask)
+                    sum([pixel[1] for pixel in pixels_in_mask]) / len(pixels_in_mask)
                 )
                 b = round(
-                    sum([pixel[2] for pixel in pixels_in_mask]) /
-                    len(pixels_in_mask)
+                    sum([pixel[2] for pixel in pixels_in_mask]) / len(pixels_in_mask)
                 )
                 new_image.putpixel((x, y), (r, g, b))
         return new_image
@@ -56,12 +55,9 @@ class MedianFilter:
         for x in range(0, w):
             for y in range(0, h):
                 pixels_in_mask, indices = get_pixels_in_mask(image, (x, y))
-                r = round(statistics.median([pixel[0]
-                          for pixel in pixels_in_mask]))
-                g = round(statistics.median([pixel[1]
-                          for pixel in pixels_in_mask]))
-                b = round(statistics.median([pixel[2]
-                          for pixel in pixels_in_mask]))
+                r = round(statistics.median([pixel[0] for pixel in pixels_in_mask]))
+                g = round(statistics.median([pixel[1] for pixel in pixels_in_mask]))
+                b = round(statistics.median([pixel[2] for pixel in pixels_in_mask]))
                 new_image.putpixel((x, y), (r, g, b))
 
         return new_image
@@ -77,11 +73,9 @@ class SobelFilter:
             for y in range(0, h):
                 pixels_in_mask, indices = get_pixels_in_mask(image, (x, y))
                 grayscale_pixels = [sum(pixel) / 3 for pixel in pixels_in_mask]
-                x_mag = sum([grayscale_pixels[i] * x_kernel[i]
-                            for i in indices])
+                x_mag = sum([grayscale_pixels[i] * x_kernel[i] for i in indices])
                 y_mag = sum(
-                    [pixel * y_kernel[i]
-                        for i, pixel in enumerate(grayscale_pixels)]
+                    [pixel * y_kernel[i] for i, pixel in enumerate(grayscale_pixels)]
                 )
                 mag = round((x_mag**2 + y_mag**2) ** 0.5)
                 new_image.putpixel((x, y), (mag, mag, mag))
@@ -97,8 +91,7 @@ class HighPassFilter:
             for y in range(0, h):
                 pixels_in_mask, indices = get_pixels_in_mask(image, (x, y))
                 grayscale_pixels = [sum(pixel) / 3 for pixel in pixels_in_mask]
-                mag = round(sum([grayscale_pixels[i] * x_kernel[i]
-                            for i in indices]))
+                mag = round(sum([grayscale_pixels[i] * x_kernel[i] for i in indices]))
                 new_image.putpixel((x, y), (mag, mag, mag))
         return new_image
 
@@ -113,8 +106,7 @@ class GaussianFilter:
                 pixels_in_mask, indices = get_pixels_in_mask(image, (x, y))
                 grayscale_pixels = [sum(pixel) / 3 for pixel in pixels_in_mask]
 
-                sum_of_vals = sum([grayscale_pixels[i] * x_kernel[i]
-                                  for i in indices])
+                sum_of_vals = sum([grayscale_pixels[i] * x_kernel[i] for i in indices])
                 mag = round(sum_of_vals / 16)
 
                 new_image.putpixel((x, y), (mag, mag, mag))
@@ -170,8 +162,7 @@ class CustomFilter:
                 )
                 grayscale_pixels = [sum(pixel) / 3 for pixel in pixels_in_mask]
                 sum_of_vals = sum(
-                    [grayscale_pixels[i] * self.weights[i]
-                        for i, pixel in indices]
+                    [grayscale_pixels[i] * self.weights[i] for i, pixel in indices]
                 )
                 mag = round(
                     sum_of_vals
